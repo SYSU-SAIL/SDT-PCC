@@ -10,12 +10,12 @@ import open3d as o3d
 
 class PCC4JUN_API:
     def __init__(self, model_cfg: ViConfig, lidar_cfg: SetConfig,
-                 checkpoint: str = "checkpoints/20250528_1139/model_best.pth", cuda: bool = True):
+                 checkpoint: str = "checkpoints/20250620_2128/model_best.pth", cuda: bool = True):
         self.model = ViCModel(model_cfg)
         self.pc_transformer = PCTransformer(lidar_cfg.dataset_cfg)
         self.cuda = cuda
         self.lidar_cfg = lidar_cfg
-        checkpoint = torch.load(checkpoint, weights_only=True)
+        checkpoint = torch.load(checkpoint, weights_only=True,map_location=torch.device('cpu'))
         self.model.load_state_dict(checkpoint['state_dict'], strict=False)
         self.device = torch.device("cuda" if cuda and torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
