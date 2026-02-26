@@ -31,13 +31,13 @@ Experiments on the **SemanticKITTI** dataset demonstrate that SDT-PCC achieves *
 
 We provide an `environment.yaml` file for reproducibility.
 
-1. Create the conda environment:
+### Create the conda environment:
 
 ```bash
 conda env create -f environment.yaml -n TO
 ````
 
-2. Activate the environment:
+### Activate the environment:
 
 ```bash
 conda activate TO
@@ -45,15 +45,31 @@ conda activate TO
 
 Please ensure that CUDA and PyTorch versions are compatible with your local GPU setup.
 
+### Install PCC Evaluation Package
+
+For compression performance evaluation, we use our evaluation toolkit:
+
+🔗 [https://github.com/haoranli50/PCCEval](https://github.com/haoranli50/PCCEval)
+
+Clone the repository and install it using:
+
+```bash
+git clone https://github.com/haoranli50/PCCEval.git
+cd PCCEval
+python setup.py install
+```
+
+This will install the `pcc_eval` package into the current environment (`TO`), enabling metric evaluation during testing.
+
 ---
 
 ## 📦 Pretrained Model Preparation
 
-1. Download the pretrained model from the following link:
+### Download the pretrained model from the following link:
 
 [https://drive.google.com/drive/folders/1lGJkBokKTw83TysPUxjC0Ww7MbJEYrIR?usp=drive_link](https://drive.google.com/drive/folders/1lGJkBokKTw83TysPUxjC0Ww7MbJEYrIR?usp=drive_link)
 
-2. Place the downloaded checkpoint file at:
+### Place the downloaded checkpoint file at:
 
 ```
 checkpoints/20250620_2128/model_best.pth
