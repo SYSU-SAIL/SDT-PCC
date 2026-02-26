@@ -26,13 +26,108 @@ Experiments on the **SemanticKITTI** dataset demonstrate that SDT-PCC achieves *
 
 ![image](img/fig_pipeline.jpg)
 
-## 📊 Experimental Results
+---
+## ⚙️ Environment Setup
 
-We provide partial experimental results on the **SemanticKITTI** dataset to showcase the effectiveness of SDT-PCC.
-Detailed comparisons and ablations can be found in the full paper.
+We provide an `environment.yaml` file for reproducibility.
+
+1. Create the conda environment:
+
+```bash
+conda env create -f environment.yaml -n TO
+````
+
+2. Activate the environment:
+
+```bash
+conda activate TO
+```
+
+Please ensure that CUDA and PyTorch versions are compatible with your local GPU setup.
 
 ---
 
-⚠️ **Note**
-This repository currently contains a **partial release** of our implementation.
-👉 The **full codebase, trained models, and detailed instructions will be made publicly available after the paper is accepted.**
+## 📦 Pretrained Model Preparation
+
+1. Download the pretrained model from the following link:
+
+[https://drive.google.com/drive/folders/1lGJkBokKTw83TysPUxjC0Ww7MbJEYrIR?usp=drive_link](https://drive.google.com/drive/folders/1lGJkBokKTw83TysPUxjC0Ww7MbJEYrIR?usp=drive_link)
+
+2. Place the downloaded checkpoint file at:
+
+```
+checkpoints/20250620_2128/model_best.pth
+```
+
+Make sure the directory structure matches exactly; otherwise, the evaluation script may not find the checkpoint automatically.
+
+---
+
+## 🧪 Evaluation
+
+You can directly evaluate the pretrained model using:
+
+```bash
+python eval.py -i ~/Dataset/data_odometry_velodyne/dataset/sequences/11/velodyne -s -f 100 -q 0.01
+```
+
+### Argument Description
+
+The available arguments in `eval.py` are:
+
+* `-i, --input_dir` (str, required)
+  Path to the input point cloud directory (e.g., a KITTI sequence folder containing `.bin` files).
+
+* `--checkpoint` (str, default=None)
+  Path to the model checkpoint. If not specified, the default path will be used.
+
+* `-s, --sample` (flag)
+  Whether to sample the test data instead of evaluating the entire sequence.
+
+* `-f, --front` (int, default=0)
+  Number of samples to take from the beginning of the sequence when sampling is enabled.
+
+* `-b, --beside` (int, default=0)
+  Number of samples to take from the end of the sequence when sampling is enabled.
+
+* `-q, --quantize_step` (float, default=0.01)
+  Quantization step size used during compression. Smaller values preserve higher precision.
+
+* `-p, --prefix` (str, default=None)
+  Prefix for saving output files.
+
+* `-c, --coder` (str, default="zlib")
+  Entropy coder used for residual encoding (e.g., `zlib`). Different coders may lead to different compression ratios and runtime performance.
+
+---
+
+## ⚠️ Compatibility Note (CompressAI Version)
+
+Due to differences across `compressai` versions, the strategy for loading CDF buffers may vary.
+
+If you encounter errors when loading the pretrained checkpoint (especially related to CDF tensors), please run:
+
+```bash
+python clean_ckpt.py
+```
+
+This script clears the stored CDFs inside the checkpoint, allowing them to be rebuilt automatically at runtime.
+
+---
+
+## 🚀 Training Your Own Model
+
+If you wish to train the model from scratch or fine-tune it:
+
+```bash
+python ddp_train.py
+```
+
+Before training, please configure dataset paths in `config.py`:
+
+* `kitti_train_config`
+* `kitti_val_config`
+
+Make sure these paths correctly point to your local KITTI dataset directories.
+
+Distributed Data Parallel (DDP) training is supported. Please ensure your multi-GPU environment is properly configured before launching training.
