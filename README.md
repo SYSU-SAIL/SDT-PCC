@@ -1,7 +1,7 @@
 
 # Slide Deformable Transformer for High-Precision LiDAR Point Cloud Compression
 
-This repository provides the **official implementation (partial release)** of our paper:
+This repository provides the **official implementation** of our paper:
 
 > **Slide Deformable Transformer for High-Precision LiDAR Point Cloud Compression**
 > *Under Review*
