@@ -3,8 +3,18 @@
 
 This repository provides the **official implementation** of our paper:
 
-> **Slide Deformable Transformer for High-Precision LiDAR Point Cloud Compression**
-> *Under Review*
+```
+@ARTICLE{li2026slide,
+  author={Li, Haoran and Xu, Lian and Xie, Liang and Gao, Wei and Ren, Zhenwen and Li, Ge and Guo, Yulan},
+  journal={IEEE Transactions on Image Processing}, 
+  title={Slide Deformable Transformer for High-Precision LiDAR Point Cloud Compression}, 
+  year={2026},
+  volume={35},
+  number={},
+  pages={6585-6600},
+  doi={10.1109/TIP.2026.3702347}
+}
+```
 
 ## 🔍 Introduction
 
